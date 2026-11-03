@@ -1,0 +1,681 @@
+<!doctype html>
+<html lang="es">
+<meta charset="utf-8">
+<title>Mi año en Creamos</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap">
+<style>
+/* Layout: una pregunta por pantalla en una columna tipo app (celular a pantalla completa, compu centrada);
+   vista aparte #pantalla para proyectar en el salón. Identidad de Ora: azul marino, fondo claro y las formas de cada programa. */
+:root{
+  --fondo:#F3F6FA; --tarjeta:#FFFFFF; --tinta:#1B2C4B; --tinta-2:#64748B; --linea:#E4E9F1;
+  --marino:#1B2C4B; --sobre-marino:#FFFFFF;
+  --ae:#6A4BF7; --gi:#EC87E6; --edu:#6FD98A; --il:#EE6430; --cci:#F4B62F;
+  --letra:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --fondo:#0E1626; --tarjeta:#162135; --tinta:#EEF2F8; --tinta-2:#94A3B8; --linea:#2A3850;
+  --marino:#E4E9F1; --sobre-marino:#1B2C4B; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --fondo:#0E1626; --tarjeta:#162135; --tinta:#EEF2F8; --tinta-2:#94A3B8; --linea:#2A3850;
+  --marino:#E4E9F1; --sobre-marino:#1B2C4B; color-scheme:dark}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{background:var(--fondo);color:var(--tinta);font:500 18px/1.45 var(--letra);
+  padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+button,input,textarea,select{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--ae);outline-offset:3px}
+h1,h2,p{margin:0}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ── App (participante) ── */
+.app{min-height:100%;max-width:520px;margin:0 auto;display:flex;flex-direction:column;background:var(--tarjeta);
+  padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px));padding-block:14px 20px}
+@media (min-width:700px){
+  body{padding-block:32px}
+  .app{min-height:760px;border-radius:32px;box-shadow:0 24px 70px -40px rgba(27,44,75,.35),0 0 0 1px var(--linea)}
+}
+.top{display:flex;align-items:center;gap:14px;min-height:48px}
+.redondo{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--linea);background:transparent;display:grid;place-items:center;flex:none}
+.redondo svg{width:20px;height:20px}
+.progreso{flex:1;height:6px;border-radius:3px;background:var(--linea);overflow:hidden}
+.progreso i{display:block;height:100%;background:var(--marino);border-radius:3px;transition:width .4s ease}
+.saltar{background:none;border:0;color:var(--tinta-2);font-weight:700;padding:10px 4px;min-width:56px;text-align:right;font-size:16px}
+.saltar[hidden]{display:block!important;visibility:hidden}
+
+.paso{flex:1;display:flex;flex-direction:column;gap:20px;padding-top:26px;animation:entra .3s ease both}
+@keyframes entra{from{transform:translateY(12px);opacity:.2}to{transform:none;opacity:1}}
+.etiqueta{align-self:center;display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--tinta-2)}
+
+.pregunta{font-size:clamp(25px,6.6vw,30px);font-weight:800;line-height:1.18;text-align:center;text-wrap:balance;letter-spacing:-.015em}
+.ayuda{text-align:center;color:var(--tinta-2);font-size:17px;text-wrap:balance}
+.cuerpo{display:flex;flex-direction:column;gap:12px;flex:1}
+.pie{padding-top:18px;display:flex;flex-direction:column;gap:8px}
+.continuar{width:100%;min-height:58px;border:0;border-radius:16px;background:var(--marino);color:var(--sobre-marino);font-weight:700;font-size:18px;
+  display:flex;align-items:center;justify-content:center;gap:10px;transition:opacity .2s}
+.continuar:disabled{opacity:.25;cursor:default}
+.continuar svg{width:20px;height:20px}
+.link{background:none;border:0;color:var(--tinta-2);font-weight:700;text-decoration:underline;text-underline-offset:4px;padding:10px;font-size:16px}
+
+/* opciones */
+.pildoras{display:flex;flex-direction:column;gap:10px}
+.pildoras.dos{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pildora{border:1.5px solid var(--linea);background:var(--tarjeta);border-radius:16px;min-height:58px;padding:14px 18px;font-weight:700;font-size:18px;
+  text-align:left;display:flex;align-items:center;gap:14px;transition:background .15s,border-color .15s,transform .1s}
+.pildora:active{transform:scale(.985)}
+.pildoras.dos .pildora{min-height:110px;justify-content:center;font-size:22px;text-align:center}
+.pildora[aria-pressed="true"]{background:var(--marino);color:var(--sobre-marino);border-color:var(--marino)}
+.pildora .check{width:24px;height:24px;border-radius:7px;border:2px solid var(--linea);flex:none;display:grid;place-items:center}
+.pildora[aria-pressed="true"] .check{border-color:var(--sobre-marino);background:var(--sobre-marino)}
+.pildora[aria-pressed="true"] .check::after{content:"";width:11px;height:6px;border-left:3px solid var(--marino);border-bottom:3px solid var(--marino);transform:rotate(-45deg) translate(1px,-1px)}
+
+
+/* entradas */
+.campo{width:100%;border:1.5px solid var(--linea);background:var(--fondo);border-radius:16px;padding:16px 18px;font-size:19px;font-weight:600}
+textarea.campo{min-height:200px;resize:vertical;font-size:18px;line-height:1.5;font-weight:500}
+.contador-txt{display:flex;justify-content:space-between;align-items:center;color:var(--tinta-2);font-size:14px;gap:12px}
+.contador-txt span{display:flex;align-items:center;gap:6px}
+.contador-txt svg{width:18px;height:18px;flex:none}
+.fecha{display:grid;grid-template-columns:1fr 1.6fr 1.2fr;gap:10px}
+.fecha label{display:flex;flex-direction:column;gap:6px;font-size:14px;color:var(--tinta-2);font-weight:700}
+.fecha select{padding:14px 10px;font-size:17px}
+.contador{display:flex;align-items:center;justify-content:center;gap:28px;padding-top:24px}
+.contador button{width:68px;height:68px;border-radius:50%;border:1.5px solid var(--linea);background:var(--tarjeta);font-size:30px;font-weight:700}
+.contador output{font-size:84px;font-weight:800;min-width:2ch;text-align:center;font-variant-numeric:tabular-nums;line-height:1}
+
+/* búsqueda */
+.persona{border:1.5px solid var(--linea);background:var(--tarjeta);border-radius:16px;padding:12px 16px;display:flex;align-items:center;gap:14px;text-align:left;width:100%}
+.persona b{display:block;font-size:18px}
+.persona small{color:var(--tinta-2);font-size:15px}
+.avatar{width:46px;height:46px;border-radius:50%;background:var(--linea);color:var(--tinta);display:grid;place-items:center;font-weight:800;flex:none;overflow:hidden}
+.avatar.xl{width:112px;height:112px;font-size:40px;margin:0 auto}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.nota-ej{font-size:14px;color:var(--tinta-2);text-align:center}
+.ficha-ora{display:flex;flex-direction:column;gap:14px;align-items:center;text-align:center}
+.ficha-ora .nombre{font-size:28px;font-weight:800;line-height:1.15}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.chip{border-radius:999px;padding:8px 14px;font-size:15px;font-weight:700;background:var(--fondo);display:flex;align-items:center;gap:8px}
+
+
+/* escala: dial */
+.dial{display:flex;flex-direction:column;align-items:center;gap:8px;flex:1;justify-content:flex-end}
+.dial .grande{width:150px;height:150px;display:grid;place-items:center}
+.dial .grande svg{transition:transform .3s cubic-bezier(.3,1.4,.5,1)}
+.dial .texto-nivel{font-size:21px;font-weight:700;min-height:30px}
+.dial .texto-nivel.vacio{color:var(--tinta-2);font-weight:600;font-size:17px}
+.dial svg.arco{width:100%;max-width:420px;height:auto;touch-action:none;cursor:pointer;margin-top:6px}
+.arco .seg{transition:opacity .2s}
+.arco .aguja{transition:transform .35s cubic-bezier(.3,1.4,.5,1)}
+.arco text{font:700 15px var(--letra);fill:var(--tinta)}
+
+/* escala: barra vertical */
+.barra{display:grid;grid-template-columns:1fr 56px 56px;align-items:stretch;flex:1;min-height:360px;touch-action:none;user-select:none}
+.barra .filas{display:grid;grid-template-rows:repeat(5,1fr)}
+.barra .fila{display:flex;align-items:center;font-size:18px;font-weight:700;color:var(--tinta-2);transition:color .2s;cursor:pointer}
+.barra .fila.on{color:var(--tinta)}
+.barra .pista{position:relative;cursor:pointer}
+.barra .riel{position:absolute;left:50%;top:10%;bottom:10%;width:8px;margin-left:-4px;border-radius:4px;background:var(--linea)}
+.barra .lleno{position:absolute;left:50%;bottom:10%;width:8px;margin-left:-4px;border-radius:4px;background:var(--c);transition:height .3s}
+.barra .perilla{position:absolute;left:50%;width:40px;height:40px;margin:-20px 0 0 -20px;border-radius:50%;background:var(--c);border:5px solid var(--tarjeta);box-shadow:0 4px 14px rgba(27,44,75,.25);transition:top .3s,opacity .2s}
+.barra .niveles{display:grid;grid-template-rows:repeat(5,1fr);justify-items:center;align-items:center}
+.barra .niveles span{border-radius:50%;background:var(--c);opacity:.22;transition:opacity .2s}
+.barra .niveles span.on{opacity:1}
+.toca{color:var(--tinta-2);font-size:15px;text-align:center}
+
+/* secciones */
+.seccion{flex:1;display:flex;flex-direction:column;justify-content:center;gap:18px;text-align:center;align-items:center;animation:entra .35s ease both}
+.seccion .num{font-size:14px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--tinta-2)}
+.seccion h1{font-size:clamp(34px,9.5vw,46px);font-weight:800;line-height:1.06;letter-spacing:-.025em;text-wrap:balance}
+.seccion p{color:var(--tinta-2);max-width:32ch;font-size:18px}
+.formas{display:flex;gap:16px;justify-content:center;align-items:center}
+.formas svg{flex:none}
+
+/* foto */
+.foto-opc{display:grid;gap:12px}
+.foto-btn{position:relative;overflow:hidden;justify-content:center}
+.foto-btn input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.vista-foto{width:190px;height:190px;border-radius:50%;object-fit:cover;margin:0 auto;display:block;border:5px solid var(--linea)}
+
+/* fin */
+.fin{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:18px;text-align:center}
+.fin h1{font-size:clamp(34px,9vw,44px);font-weight:800;line-height:1.08;text-wrap:balance;letter-spacing:-.02em}
+.fin p{color:var(--tinta-2);max-width:30ch}
+.aviso{font-size:15px;background:var(--fondo);border-radius:12px;padding:12px 14px;color:var(--tinta)}
+details.adrian{font-size:15px;color:var(--tinta-2);border-top:1.5px solid var(--linea);padding-top:12px}
+details.adrian summary{cursor:pointer;font-weight:700}
+details.adrian ol{padding-left:20px;display:flex;flex-direction:column;gap:8px;margin:10px 0 0}
+details.adrian code{font-size:13px;background:var(--fondo);padding:1px 5px;border-radius:5px}
+
+/* ── Pantalla del salón ── */
+.pantalla{min-height:100%;background:#1B2C4B;color:#FFFFFF;display:flex;flex-direction:column;
+  padding-left:max(40px,env(safe-area-inset-left,0px));padding-right:max(40px,env(safe-area-inset-right,0px));padding-block:36px;gap:30px;position:relative;overflow:hidden}
+.pantalla .enc{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;flex-wrap:wrap}
+.pantalla .eyebrow{font-size:16px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;opacity:.65}
+.pantalla h1{font-size:clamp(38px,5.4vw,78px);font-weight:800;line-height:1.02;letter-spacing:-.025em;max-width:15ch;margin-top:12px}
+.unirse{display:flex;gap:16px;align-items:center;background:#FFFFFF;color:#1B2C4B;border-radius:20px;padding:14px 18px;max-width:100%}
+.unirse #qr{line-height:0}
+.unirse #qr img,.unirse #qr canvas{width:120px!important;height:120px!important}
+.unirse p{font-weight:800;font-size:19px;max-width:13ch;line-height:1.2}
+.cuenta{font-size:clamp(18px,2vw,26px);font-weight:700;display:flex;align-items:baseline;gap:14px;opacity:.9}
+.cuenta b{font-size:clamp(54px,6.5vw,100px);line-height:1;font-variant-numeric:tabular-nums;opacity:1}
+.muro{display:flex;flex-wrap:wrap;gap:18px}
+.muro .g{display:flex;flex-direction:column;align-items:center;gap:6px;width:96px;text-align:center;font-weight:700;font-size:16px;animation:entra .5s ease both}
+.muro .avatar{width:80px;height:80px;font-size:28px;background:rgba(255,255,255,.12);color:#FFFFFF;border:3px solid rgba(255,255,255,.85)}
+.vacio-p{opacity:.65;font-size:21px}
+.deco{position:absolute;right:-30px;bottom:-30px;display:flex;gap:22px;align-items:flex-end;opacity:.95;pointer-events:none}
+.deco svg{flex:none}
+.cele{position:absolute;inset:0;background:#1B2C4B;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;text-align:center;z-index:5;padding:32px}
+.cele .avatar{width:min(42vh,340px);height:min(42vh,340px);font-size:min(15vh,120px);background:rgba(255,255,255,.12);color:#FFFFFF;border:8px solid #FFFFFF;animation:entra .5s ease both}
+.cele h2{font-size:clamp(42px,7.5vw,112px);font-weight:800;line-height:1;letter-spacing:-.025em}
+.cele .sub{font-size:clamp(19px,2.2vw,30px);opacity:.75}
+.cele .tiempo{width:min(520px,80%);height:8px;border-radius:4px;background:rgba(255,255,255,.18);overflow:hidden}
+.cele .tiempo i{display:block;height:100%;background:#FFFFFF;width:100%}
+.cele .sigue{font-size:19px;opacity:.7}
+canvas.confeti{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:6}
+.pie-p{display:flex;gap:12px;flex-wrap:wrap;margin-top:auto;position:relative;z-index:1}
+.btn-p{border:1.5px solid rgba(255,255,255,.3);background:transparent;color:#FFFFFF;border-radius:12px;padding:11px 18px;font-weight:700;font-size:15px}
+</style>
+
+<div id="raiz"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+(() => {
+const URL_APP = /^https?:$/.test(location.protocol) && !/claude\.ai|claudeusercontent/.test(location.host) ? location.origin + location.pathname : "https://claude.ai/artifact/R7jvq3iFzzAmSQ4R5UpKnS";
+const $ = s => document.querySelector(s);
+const esc = t => String(t ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const sinTildes = s => String(s).normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase();
+const ICO = {
+  atras:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>`,
+  flecha:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>`,
+  mic:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0014 0M12 18v3"/></svg>`,
+};
+
+// ── Programas: claves de Ora, nombre, color y forma de la identidad de Creamos
+const PROG = {
+  "apoyo-emocional":  {n:"Apoyo Emocional", el:"Apoyo Emocional", c:"--ae", forma:"circulo"},
+  "mi-elo":           {n:"Generador de Ingresos (mi eelo)", corto:"mi eelo", el:"mi eelo", c:"--gi", forma:"horizontal"},
+  "educacion":        {n:"Educación Acelerada", el:"Educación Acelerada", c:"--edu", forma:"vertical"},
+  "inclusion-laboral":{n:"Inclusión Laboral", el:"Inclusión Laboral", c:"--il", forma:"cuadro"},
+  "cci":              {n:"Centro de Cuidado Infantil", corto:"CCI", el:"el Centro de Cuidado Infantil", c:"--cci", forma:"rombo"},
+};
+const ORDEN = Object.keys(PROG);
+// Las formas: círculo, píldora horizontal, píldora vertical, cuadro. CCI (rombo) no está en la referencia: es propuesta.
+function forma(k, {max=56, cls="", estilo=""}={}){
+  const c = `var(${PROG[k].c})`;
+  const f = {
+    circulo:   [56,56,`<circle cx="28" cy="28" r="28" fill="${c}"/>`],
+    horizontal:[112,40,`<rect width="112" height="40" rx="20" fill="${c}"/>`],
+    vertical:  [40,112,`<rect width="40" height="112" rx="20" fill="${c}"/>`],
+    cuadro:    [44,44,`<rect width="44" height="44" rx="6" fill="${c}"/>`],
+    rombo:     [52,52,`<rect x="11" y="11" width="30" height="30" rx="5" fill="${c}" transform="rotate(45 26 26)"/>`],
+  }[PROG[k].forma];
+  const e = max/112;
+  return `<svg class="forma ${cls}" style="${estilo}" viewBox="0 0 ${f[0]} ${f[1]}" width="${Math.round(f[0]*e)}" height="${Math.round(f[1]*e)}" aria-hidden="true">${f[2]}</svg>`;
+}
+const filaFormas = (cls="") => `<div class="formas ${cls}">${["apoyo-emocional","mi-elo","educacion","inclusion-laboral"].map(k=>forma(k,{max:76})).join("")}</div>`;
+
+// Escala de 5, igual a las estrellas de Kobo (1 = muy poco, 5 = excelente)
+const NIV = ["Nada satisfecha","Poco satisfecha","Neutral","Satisfecha","Muy satisfecha"];
+
+const SERV = {
+  "apoyo-emocional":{id:"AE_servicios", multi:true, q:"¿En qué servicios de Apoyo Emocional participaste?", ops:["Terapia Individual","RelajArte","Terapia Ocupacional","Escuela para Madres/Padres","Grupo de Autopercepción","Gestión de Casos","Grupo de apoyo emocional"]},
+  "educacion":{id:"CEEX_grado_etapa", q:"¿Qué grado cursaste este año?", ops:["Etapa Inicial","Etapa Post 1","Etapa Post 2","Básico I","Básico II","4to Bachillerato","5to Bachillerato"]},
+  "inclusion-laboral":{id:"IL_proyecto_servicio", multi:true, q:"¿En qué cursos o servicios de Inclusión Laboral participaste?", ops:["Gastronomía","Barismo","Marketing","Programación","Servicio al Cliente","Gestión de Residuos","Planta de Producción de Alimentos","Acompañamiento Profesional","Alfabetización digital","Certificación Microsoft","Food Manager"]},
+  "mi-elo":{id:"mieelo", q:"¿En qué área de mi eelo participaste?", ops:["Manufactura","Textiles"]},
+};
+
+// Directorio de EJEMPLO. En Ora: participants_directory + participants.zone + program_enrollments.
+const DIRECTORIO = [
+  {id:"ej-01", name:"Ana Lucía Ejemplo", creamos_id:"ANEJ010190", zone:"Zona 3", programs:["cci","educacion","mi-elo"]},
+  {id:"ej-02", name:"María José Prueba", creamos_id:"MAPR120588", zone:"Zona 7", programs:["apoyo-emocional","inclusion-laboral"]},
+  {id:"ej-03", name:"Rosa Elena Muestra", creamos_id:"ROMU230795", zone:"Zona 3", programs:["educacion"]},
+  {id:"ej-04", name:"Karla Patricia Demo", creamos_id:"KADE050601", zone:"Zona 3", programs:["mi-elo","apoyo-emocional"]},
+  {id:"ej-05", name:"Marta Ejemplo López", creamos_id:"MAEJ300382", zone:"Zona 7", programs:["cci"]},
+  {id:"ej-06", name:"Ana María Prueba", creamos_id:"ANPR140999", zone:"", programs:["inclusion-laboral","educacion"]},
+];
+const colonias3 = ["Asentamiento 14 de octubre","Asentamiento 20 de octubre","Colonia Aguilar","Asentamiento Aguilar 1","Asentamiento Aguilar 2","Asentamiento Aguilar 3","Cantón Barrillas","Asentamiento Orilia","Asentamiento El Recuerdo","Asentamiento La Paz","Asentamiento Los Pinos","Asentamiento Manuel Colóm Argueta","Anexo Manuel Colóm Argueta","Asentamiento Nuevo Amanecer","Anexo Nuevo Amanecer","Asentamiento Nueva Concepción","Asentamiento Piedra Santa","Asentamiento San Juan","Asentamiento Shalóm","Otra"];
+const colonias7 = ["Colonia Castillo Lara","Colonia Landivar","Colonia La Verbena","Colonia Quinta Samayoa","Colonia San Francisco de Asis","Otra"];
+const sectores = ["Administración","Alimentos y Bebidas","Construcción","Logística","Marketing/Comunicaciones","Operaciones","Servicio al Cliente","Tecnología","Otro"];
+const informales = ["Reciclaje","Reciclaje directo en el basurero","Trabajo en recicladoras","Ventas en la comunidad","Ayudante de recolectores","Compra y venta de segunda mano","Cuidado de niñas y niños","Trabajo en bares","Ventas ambulantes","Fletes y choferes","Comercio en mercados","Otro"];
+
+// ── Estado
+let vista = location.hash === "#pantalla" ? "pantalla" : "form";
+let A = {}, hist = [], salto = new Set();
+const nueva = () => A._nueva === true;
+const empleada = () => A.empleo_actual === "Sí";
+const tiene = (k,v) => Array.isArray(A[k]) && A[k].includes(v);
+const progsSel = () => ORDEN.filter(k => tiene("programas", k));
+const primerNombre = () => (A._ora?.name || A.Nombre_s || "").trim().split(/\s+/)[0] || "";
+
+// ── Pasos: una pregunta por pantalla. id = campo de Kobo cuando existe.
+const P1 = "Datos personales", P2 = "Empleo", P3 = "Programas";
+const PASOS = [
+  {id:"_s1", tipo:"seccion", parte:1, t:"Datos personales", d:"Buscá tu nombre para cargar tu información de Ora."},
+  {id:"_buscar", s:P1, tipo:"buscar", q:"Escribí tu nombre", a:"Seleccioná tu nombre cuando aparezca en la lista."},
+  {id:"_confirmar", s:P1, tipo:"confirmar", q:"¿Es correcta esta información?", si:()=>!nueva()},
+  {id:"Nombre_s", s:P1, tipo:"corto", q:"¿Cuál es tu nombre?", ph:"Nombre", si:nueva},
+  {id:"Apellidos", s:P1, tipo:"corto", q:"¿Cuáles son tus apellidos?", ph:"Apellidos", si:nueva},
+  {id:"Fecha_de_nacimiento", s:P1, tipo:"fecha", q:"¿Cuál es tu fecha de nacimiento?", si:nueva},
+  {id:"Numero_de_Tel_fono", s:P1, tipo:"corto", q:"¿Cuál es tu número de teléfono?", ph:"0000 0000", tel:true, salta:true, si:nueva},
+  {id:"zona", s:P1, tipo:"una", q:"¿En qué zona vivís?", ops:["Zona 3","Zona 7","Otra"], si:()=>nueva()||!A._ora?.zone},
+  {id:"Otra_zona", s:P1, tipo:"corto", q:"¿En qué zona?", salta:true, si:()=>A.zona==="Otra"},
+  {id:"Colonia_Zona_3", s:P1, tipo:"una", q:"¿En qué colonia o asentamiento vivís?", ops:colonias3, salta:true, si:()=>A.zona==="Zona 3"},
+  {id:"colonia_zona_7", s:P1, tipo:"una", q:"¿En qué colonia vivís?", ops:colonias7, salta:true, si:()=>A.zona==="Zona 7"},
+  {id:"otra_colonia", s:P1, tipo:"corto", q:"¿En qué colonia?", salta:true, si:()=>A.Colonia_Zona_3==="Otra"||A.colonia_zona_7==="Otra"},
+  {id:"hijxs_si_no", s:P1, tipo:"una", q:"¿Tenés hijas o hijos?", ops:["Sí","No"], salta:true},
+  {id:"cuantos_hijxs", s:P1, tipo:"contador", q:"¿Cuántos?", salta:true, si:()=>A.hijxs_si_no==="Sí"},
+
+  {id:"_s2", tipo:"seccion", parte:2, t:"Empleo", d:"Estas preguntas nos ayudan a conocer tu situación laboral. Todas son opcionales."},
+  {id:"empleo_actual", s:P2, tipo:"una", q:"¿Tenés empleo actualmente?", ops:["Sí","No"], salta:true},
+  {id:"empleo_formal_informal", s:P2, tipo:"una", q:"¿Tu empleo es formal o informal?", a:"Es formal si tenés contrato o prestaciones de ley.", ops:["Formal","Informal"], salta:true, si:empleada},
+  {id:"trabajo_actual_formal_sector", s:P2, tipo:"una", q:"¿En qué sector trabajás?", ops:sectores, salta:true, si:()=>empleada()&&A.empleo_formal_informal==="Formal"},
+  {id:"trabajo_formal_otro", s:P2, tipo:"corto", q:"¿En qué sector?", salta:true, si:()=>empleada()&&A.trabajo_actual_formal_sector==="Otro"},
+  {id:"trabajo_actual_informal_tipo", s:P2, tipo:"una", q:"¿Qué tipo de trabajo realizás?", ops:informales, salta:true, si:()=>empleada()&&A.empleo_formal_informal==="Informal"},
+  {id:"trabajo_actual_informal_otro", s:P2, tipo:"corto", q:"¿Qué trabajo realizás?", salta:true, si:()=>empleada()&&A.trabajo_actual_informal_tipo==="Otro"},
+  {id:"prestaciones", s:P2, tipo:"una", q:"¿Tenés prestaciones?", ops:["Sí","No"], salta:true, si:()=>empleada()&&A.empleo_formal_informal==="Formal"},
+  {id:"satisfaccion_empleo", s:P2, tipo:"una", q:"¿Estás satisfecha con tu empleo?", ops:["Sí","No"], salta:true, si:empleada},
+  {id:"satisfaccion_comentario", s:P2, tipo:"abierta", q:"¿Por qué no estás satisfecha?", salta:true, si:()=>empleada()&&A.satisfaccion_empleo==="No"},
+  {id:"ingresos_mensuales", s:P2, tipo:"una", q:"¿Cuánto ganás al mes, aproximadamente?", a:"El salario mínimo 2025 es de Q3,973.05, con bonificación.", ops:["Menos del salario mínimo","Igual al salario mínimo","Más del salario mínimo"], salta:true, si:empleada},
+  {id:"otras_fuentes_ingreso", s:P2, tipo:"una", q:"¿Tenés otras fuentes de ingreso?", ops:["Sí","No"], salta:true},
+  {id:"otras_fuentes_ingreso_comentario", s:P2, tipo:"abierta", q:"¿Cuáles son?", salta:true, si:()=>A.otras_fuentes_ingreso==="Sí"},
+  {id:"ayuda_economica", s:P2, tipo:"una", q:"¿Recibís apoyo económico de alguien?", ops:["Sí","No"], salta:true},
+  {id:"ayuda_economica_quien", s:P2, tipo:"varias", q:"¿De quién recibís apoyo?", a:"Podés seleccionar varias opciones.", ops:["Pareja","Madre","Padre","Hermanos","Otros familiares","Conocidos","Otro"], salta:true, si:()=>A.ayuda_economica==="Sí"},
+  {id:"decision_sobre_dinero", s:P2, tipo:"una", q:"¿Quién decide cómo se usa el dinero que ganás?", ops:["Yo","Mi pareja","Otro familiar","Mi pareja y yo","Otro familiar y yo","Toda la familia"], salta:true, si:empleada},
+
+  {id:"_s3", tipo:"seccion", parte:3, t:"Programas", d:"Tu opinión nos ayuda a mejorar los programas para quienes vienen después."},
+  {id:"programas", s:P3, tipo:"programas", q:"¿En qué programas participaste este año?"},
+];
+ORDEN.forEach(k => {
+  const en = () => tiene("programas", k), nom = PROG[k].corto || PROG[k].n, el = PROG[k].el;
+  if (SERV[k]) PASOS.push({...SERV[k], s:nom, prog:k, tipo:SERV[k].multi?"varias":"una", salta:true, si:en});
+  PASOS.push({id:`${k}_calificacion`, s:nom, prog:k, tipo:"escala", q:`¿Qué tan satisfecha estás con ${el}?`, salta:true, si:en});
+  PASOS.push({id:`${k}_gusto`, s:nom, prog:k, tipo:"abierta", q:`¿Qué te gustó de ${el}?`.replace("de el ","del "), salta:true, si:en});
+  PASOS.push({id:`${k}_mejorar`, s:nom, prog:k, tipo:"abierta", q:"¿Qué se podría mejorar?", salta:true, si:en});
+});
+PASOS.push({id:"_foto", tipo:"foto", s:"Pantalla del salón", q:"¿Querés aparecer con foto en la pantalla?", a:"Tu foto se muestra unos segundos en la pantalla del salón, junto a tu primer nombre."});
+PASOS.push({id:"_fin", tipo:"fin"});
+
+const visibles = () => PASOS.filter(p => !p.si || p.si());
+
+// ── Render participante
+function render(){
+  if (vista === "pantalla") return renderPantalla();
+  const raiz = $("#raiz");
+  if (!hist.length){ raiz.innerHTML = `<div class="app">${hola()}</div>`; montarHola(); return; }
+  const p = PASOS.find(x => x.id === hist[hist.length-1]);
+  const vs = visibles(), i = vs.findIndex(x => x.id === p.id), pct = Math.round(100*i/(vs.length-1));
+  if (p.tipo === "fin"){ raiz.innerHTML = `<div class="app">${fin()}</div>`; montarFin(); return; }
+  const top = `<div class="top"><button class="redondo" id="atras" aria-label="Atrás">${ICO.atras}</button>
+    <div class="progreso" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100"><i style="width:${pct}%"></i></div>
+    <button class="saltar" id="saltar" ${p.salta?"":"hidden"}>Saltar</button></div>`;
+  if (p.tipo === "seccion"){
+    raiz.innerHTML = `<div class="app">${top}<div class="seccion">${filaFormas()}
+      <span class="num">Parte ${p.parte} de 3</span><h1>${esc(p.t)}</h1><p>${esc(p.d)}</p></div>
+      <div class="pie"><button class="continuar" id="sigue">Continuar ${ICO.flecha}</button></div></div>`;
+    $("#sigue").onclick = avanza; $("#atras").onclick = atras; return;
+  }
+  const aviso = p.id==="programas" && A._ora ? "Ya marcamos los programas registrados en Ora. Podés agregar o quitar." : p.a;
+  raiz.innerHTML = `<div class="app">${top}<div class="paso">
+      <span class="etiqueta">${p.prog?forma(p.prog,{max:18}):""}${esc(p.s)}</span>
+      <h1 class="pregunta">${esc(p.q)}</h1>${aviso?`<p class="ayuda">${esc(aviso)}</p>`:""}
+      <div class="cuerpo">${cuerpo(p)}</div></div>
+    <div class="pie">${pie(p)}</div></div>`;
+  montar(p);
+}
+
+function cuerpo(p){
+  const v = A[p.id];
+  switch(p.tipo){
+    case "una": return `<div class="pildoras ${p.ops.length===2?"dos":""}">${p.ops.map(o=>`<button class="pildora" data-v="${esc(o)}" aria-pressed="${v===o}">${esc(o)}</button>`).join("")}</div>`;
+    case "varias": return `<div class="pildoras">${p.ops.map(o=>`<button class="pildora" data-v="${esc(o)}" aria-pressed="${(v||[]).includes(o)}"><span class="check"></span>${esc(o)}</button>`).join("")}</div>`;
+    case "programas": return `<div class="pildoras">${ORDEN.map(k=>`<button class="pildora" data-v="${k}" aria-pressed="${(v||[]).includes(k)}"><span style="width:44px;display:grid;place-items:center;flex:none">${forma(k,{max:34})}</span>${esc(PROG[k].n)}</button>`).join("")}</div>`;
+    case "corto": return `<input class="campo" id="f" type="${p.tel?"tel":"text"}" ${p.tel?'inputmode="numeric"':""} autocomplete="off" placeholder="${esc(p.ph||"")}" value="${esc(v||"")}">`;
+    case "abierta": return `<textarea class="campo" id="f" maxlength="500" placeholder="Escribí tu respuesta">${esc(v||"")}</textarea>
+      <div class="contador-txt"><span>${ICO.mic}También podés dictar con el micrófono del teclado.</span><span id="cnt">${(v||"").length}/500</span></div>`;
+    case "contador": return `<div class="contador"><button data-d="-1" aria-label="Uno menos">−</button><output id="cnt">${v||1}</output><button data-d="1" aria-label="Uno más">+</button></div>`;
+    case "fecha": {
+      const [d,m,y] = (v||"--").split("-"), anio = new Date().getFullYear();
+      const meses = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
+      return `<div class="fecha">
+        <label>Día<select class="campo" id="fd"><option value="">—</option>${Array.from({length:31},(_,i)=>{const x=String(i+1).padStart(2,"0");return `<option ${d===x?"selected":""}>${x}</option>`}).join("")}</select></label>
+        <label>Mes<select class="campo" id="fm"><option value="">—</option>${meses.map((n,i)=>{const x=String(i+1).padStart(2,"0");return `<option value="${x}" ${m===x?"selected":""}>${n}</option>`}).join("")}</select></label>
+        <label>Año<select class="campo" id="fy"><option value="">—</option>${Array.from({length:70},(_,i)=>anio-12-i).map(a=>`<option ${+y===a?"selected":""}>${a}</option>`).join("")}</select></label></div>`; }
+    case "buscar": return `<input class="campo" id="f" type="text" autocomplete="off" placeholder="Nombre" value="${esc(A._q||"")}">
+      <div class="pildoras" id="res" aria-live="polite"></div>
+      <p class="nota-ej">Nombres de ejemplo. En Ora aparecen las participantes registradas.</p>`;
+    case "confirmar": { const o = A._ora;
+      return `<div class="ficha-ora"><div class="avatar xl">${esc(iniciales(o.name))}</div><p class="nombre">${esc(o.name)}</p>
+        <div class="chips">${o.zone?`<span class="chip">${esc(o.zone)}</span>`:""}${o.programs.map(k=>PROG[k]?`<span class="chip">${forma(k,{max:16})}${esc(PROG[k].corto||PROG[k].n)}</span>`:"").join("")}</div></div>`; }
+    case "escala": return progsSel().indexOf(p.prog) % 2 === 0 ? dial(p.prog, v) : barra(p.prog, v);
+    case "foto": return `<div class="foto-opc">
+        ${A._foto ? `<img class="vista-foto" src="${A._foto}" alt="Tu foto">` : `<div class="avatar xl">${esc(iniciales(A._ora?.name || `${A.Nombre_s||""} ${A.Apellidos||""}`))}</div>`}
+        <label class="pildora foto-btn">${A._foto?"Tomar otra foto":"Sí, tomar una foto"}<input type="file" id="cam" accept="image/*" capture="user"></label>
+        <button class="pildora" id="sinfoto" style="justify-content:center" aria-pressed="${A._foto===null}">Solo mi nombre</button></div>`;
+  }
+  return "";
+}
+function pie(p){
+  if (p.tipo==="buscar") return `<button class="link" id="nueva">No encuentro mi nombre</button>`;
+  if (p.tipo==="confirmar") return `<button class="continuar" id="sigue">Sí, es correcta ${ICO.flecha}</button><button class="link" id="nosoy">No soy yo</button>`;
+  if (p.tipo==="una") return ``;
+  if (p.tipo==="foto") return `<button class="continuar" id="sigue" ${A._foto===undefined?"disabled":""}>Enviar respuestas ${ICO.flecha}</button>`;
+  return `<button class="continuar" id="sigue">Continuar ${ICO.flecha}</button>`;
+}
+const iniciales = n => String(n||"?").trim().split(/\s+/).slice(0,2).map(x=>x[0]||"").join("").toUpperCase() || "?";
+
+// Dial semicircular: 5 tramos del color del programa, de claro a intenso
+const CX=160, CY=168, R1=154, R0=70;
+const pt = (r,a) => [CX + r*Math.cos(a), CY + r*Math.sin(a)];
+const OPAC = [.32,.48,.64,.82,1];
+function dial(k, v){
+  let segs = "";
+  for (let i=0;i<5;i++){
+    const a0 = Math.PI + i*Math.PI/5 + .012, a1 = a0 + Math.PI/5 - .024, [x0,y0]=pt(R1,a0), [x1,y1]=pt(R1,a1), [x2,y2]=pt(R0,a1), [x3,y3]=pt(R0,a0);
+    const [tx,ty] = pt((R1+R0)/2, (a0+a1)/2);
+    segs += `<g class="seg" data-n="${i+1}" opacity="${!v||v===i+1?1:.5}"><path d="M${x0} ${y0}A${R1} ${R1} 0 0 1 ${x1} ${y1}L${x2} ${y2}A${R0} ${R0} 0 0 0 ${x3} ${y3}Z" fill="var(${PROG[k].c})" fill-opacity="${OPAC[i]}"/>
+      <text x="${tx}" y="${ty+5}" text-anchor="middle" pointer-events="none">${i+1}</text></g>`;
+  }
+  const ang = v ? (-90 + (v-0.5)*36) : 0;
+  return `<div class="dial"><div class="grande" id="grande">${formaNivel(k, v)}</div>
+    <p class="texto-nivel ${v?"":"vacio"}" id="txtN">${v?NIV[v-1]:"Seleccioná o deslizá sobre el arco"}</p>
+    <svg class="arco" id="arco" viewBox="0 0 320 176" role="slider" aria-label="Nivel de satisfacción" aria-valuemin="1" aria-valuemax="5" aria-valuenow="${v||""}" aria-valuetext="${v?NIV[v-1]:"Sin responder"}" tabindex="0">
+      ${segs}
+      <g class="aguja" id="aguja" style="transform-origin:${CX}px ${CY}px;transform:rotate(${ang}deg)" opacity="${v?1:0}">
+        <path d="M${CX-8} ${CY} L${CX} ${CY-92} L${CX+8} ${CY} Z" fill="var(--tinta)"/><circle cx="${CX}" cy="${CY}" r="15" fill="var(--tinta)"/><circle cx="${CX}" cy="${CY}" r="5" fill="var(--tarjeta)"/>
+      </g></svg></div>`;
+}
+// La forma del programa crece con el nivel
+const formaNivel = (k, v) => v ? forma(k,{max:Math.round(70 + v*18), estilo:`opacity:${OPAC[v-1]*.5+.5}`})
+  : `<svg viewBox="0 0 100 100" width="110" height="110" aria-hidden="true"><circle cx="50" cy="50" r="46" fill="none" stroke="var(--linea)" stroke-width="3" stroke-dasharray="7 6"/></svg>`;
+
+// Barra vertical
+function barra(k, v){
+  const filas = [5,4,3,2,1], top = v ? 10 + (5-v)*20 : 50;
+  return `<div class="barra" id="barra" style="--c:var(${PROG[k].c})" role="slider" tabindex="0" aria-label="Nivel de satisfacción" aria-valuemin="1" aria-valuemax="5" aria-valuenow="${v||""}" aria-valuetext="${v?NIV[v-1]:"Sin responder"}">
+    <div class="filas">${filas.map(n=>`<div class="fila ${v===n?"on":""}" data-n="${n}">${NIV[n-1]}</div>`).join("")}</div>
+    <div class="pista" id="pista"><span class="riel"></span><span class="lleno" style="height:${v?(v-1)*20:0}%"></span>
+      <span class="perilla" style="top:${top}%;${v?"":"opacity:.3"}"></span></div>
+    <div class="niveles">${filas.map(n=>`<span data-n="${n}" class="${v===n?"on":""}" style="width:${12+n*6}px;height:${12+n*6}px"></span>`).join("")}</div></div>
+    ${v?"":`<p class="toca">Deslizá o seleccioná una opción</p>`}`;
+}
+
+function montar(p){
+  const sigue = $("#sigue");
+  $("#atras").onclick = atras;
+  const sal = $("#saltar"); if (sal) sal.onclick = () => { salto.add(p.id); delete A[p.id]; avanza(); };
+  const listo = ok => { if (sigue) sigue.disabled = !ok; };
+  const cuerpoEl = document.querySelector(".cuerpo");
+  if (p.tipo==="una") cuerpoEl.querySelectorAll(".pildora").forEach(b => b.onclick = () => {
+    A[p.id] = b.dataset.v; salto.delete(p.id);
+    cuerpoEl.querySelectorAll(".pildora").forEach(x => x.setAttribute("aria-pressed", x===b)); setTimeout(avanza, 260);
+  });
+  if (p.tipo==="varias"||p.tipo==="programas"){
+    const orden = p.tipo==="programas" ? ORDEN : p.ops;
+    cuerpoEl.querySelectorAll(".pildora").forEach(b => b.onclick = () => {
+      const s = new Set(A[p.id]||[]); s.has(b.dataset.v) ? s.delete(b.dataset.v) : s.add(b.dataset.v);
+      A[p.id] = orden.filter(o => s.has(o)); b.setAttribute("aria-pressed", s.has(b.dataset.v)); listo(A[p.id].length>0);
+    });
+    listo((A[p.id]||[]).length>0);
+  }
+  if (p.tipo==="corto"||p.tipo==="abierta"){
+    const f = $("#f"); const upd = () => { A[p.id] = f.value; listo(!!f.value.trim()); if ($("#cnt")) $("#cnt").textContent = `${f.value.length}/500`; };
+    f.oninput = upd; upd(); if (p.tipo==="corto") f.focus({preventScroll:true});
+  }
+  if (p.tipo==="contador"){ if (!A[p.id]) A[p.id] = 1;
+    cuerpoEl.querySelectorAll("[data-d]").forEach(b => b.onclick = () => { A[p.id] = Math.max(1, Math.min(15, A[p.id] + +b.dataset.d)); $("#cnt").textContent = A[p.id]; }); }
+  if (p.tipo==="fecha"){ const upd = () => { A[p.id] = `${$("#fd").value}-${$("#fm").value}-${$("#fy").value}`; listo($("#fd").value&&$("#fm").value&&$("#fy").value); };
+    ["#fd","#fm","#fy"].forEach(s => $(s).onchange = upd); listo(/^\d+-\d+-\d+$/.test(A[p.id]||"")); }
+  if (p.tipo==="buscar") montarBuscar();
+  if (p.tipo==="confirmar") $("#nosoy").onclick = () => { A._ora = null; hist.pop(); render(); };
+  if (p.tipo==="escala") montarEscala(p, listo);
+  if (p.tipo==="foto") montarFoto();
+  if (sigue) sigue.onclick = () => {
+    if (p.tipo==="corto"||p.tipo==="abierta") A[p.id] = $("#f").value.trim();
+    if (p.tipo==="confirmar"){ const o = A._ora; A.participant_id = o.id; A.contact_ID_1 = o.creamos_id; if (o.zone) A.zona = o.zone;
+      if (!A.programas) A.programas = ORDEN.filter(k => o.programs.includes(k)); }
+    if (p.tipo==="foto") return enviar();
+    salto.delete(p.id); avanza();
+  };
+}
+
+function montarBuscar(){
+  const f = $("#f"), res = $("#res");
+  const pinta = () => {
+    A._q = f.value; const q = sinTildes(f.value.trim());
+    if (q.length < 2){ res.innerHTML = ""; return; }
+    const hits = DIRECTORIO.filter(d => q.split(/\s+/).every(w => sinTildes(d.name).includes(w))).slice(0,5);
+    res.innerHTML = hits.length ? hits.map(d => `<button class="persona" data-id="${d.id}"><span class="avatar">${esc(iniciales(d.name))}</span><span><b>${esc(d.name)}</b><small>${esc(d.zone||"")}</small></span></button>`).join("")
+      : `<p class="ayuda">No encontramos ese nombre. Probá solo con tu primer nombre.</p>`;
+    res.querySelectorAll(".persona").forEach(b => b.onclick = () => {
+      A = {_q:A._q, _nueva:false, _ora:DIRECTORIO.find(x => x.id===b.dataset.id)}; avanza();
+    });
+  };
+  f.oninput = pinta; pinta(); f.focus({preventScroll:true});
+  $("#nueva").onclick = () => { A = {_nueva:true, _q:A._q}; avanza(); };
+}
+
+function montarEscala(p, listo){
+  const pon = n => { if (!n || n===A[p.id]) return; A[p.id] = n; salto.delete(p.id); refrescaEscala(p); listo(true); };
+  const arco = $("#arco"), bar = $("#barra");
+  const teclas = ev => { const d = {ArrowRight:1,ArrowUp:1,ArrowLeft:-1,ArrowDown:-1}[ev.key]; if (d){ ev.preventDefault(); pon(Math.min(5, Math.max(1, (A[p.id]||3) + (A[p.id]?d:0)))); } };
+  if (arco){
+    const nivel = ev => { const m = arco.getScreenCTM().inverse(), q = new DOMPoint(ev.clientX, ev.clientY).matrixTransform(m);
+      let a = Math.atan2(q.y - CY, q.x - CX); if (a < 0) a += 2*Math.PI; if (q.y > CY) a = q.x < CX ? Math.PI : 2*Math.PI - 0.001;
+      return Math.min(5, Math.max(1, Math.floor((a - Math.PI)/(Math.PI/5)) + 1)); };
+    let arr = false;
+    arco.onpointerdown = ev => { arr = true; try{arco.setPointerCapture(ev.pointerId)}catch{} pon(nivel(ev)); };
+    arco.onpointermove = ev => { if (arr) pon(nivel(ev)); };
+    arco.onpointerup = arco.onpointercancel = () => arr = false;
+    arco.onkeydown = teclas;
+  }
+  if (bar){
+    const pista = $("#pista");
+    const nivel = ev => { const r = pista.getBoundingClientRect(), y = (ev.clientY - r.top)/r.height; return Math.min(5, Math.max(1, 5 - Math.round((y - .1)/.2))); };
+    let arr = false;
+    pista.onpointerdown = ev => { arr = true; try{pista.setPointerCapture(ev.pointerId)}catch{} pon(nivel(ev)); };
+    pista.onpointermove = ev => { if (arr) pon(nivel(ev)); };
+    pista.onpointerup = pista.onpointercancel = () => arr = false;
+    bar.querySelectorAll("[data-n]").forEach(f => f.onclick = () => pon(+f.dataset.n));
+    bar.onkeydown = teclas;
+  }
+  listo(!!A[p.id]);
+}
+function refrescaEscala(p){
+  const v = A[p.id], arco = $("#arco");
+  if (arco){
+    $("#grande").innerHTML = formaNivel(p.prog, v); const t = $("#txtN"); t.textContent = NIV[v-1]; t.classList.remove("vacio");
+    const ag = $("#aguja"); ag.setAttribute("opacity", 1); ag.style.transform = `rotate(${-90 + (v-0.5)*36}deg)`;
+    arco.querySelectorAll(".seg").forEach(s => s.setAttribute("opacity", +s.dataset.n===v ? 1 : .5));
+    arco.setAttribute("aria-valuenow", v); arco.setAttribute("aria-valuetext", NIV[v-1]);
+  } else {
+    const b = $("#barra");
+    b.querySelectorAll(".fila").forEach(f => f.classList.toggle("on", +f.dataset.n===v));
+    b.querySelectorAll(".niveles span").forEach(s => s.classList.toggle("on", +s.dataset.n===v));
+    b.querySelector(".lleno").style.height = `${(v-1)*20}%`;
+    Object.assign(b.querySelector(".perilla").style, {top:`${10+(5-v)*20}%`, opacity:1});
+    b.setAttribute("aria-valuenow", v); b.setAttribute("aria-valuetext", NIV[v-1]);
+    document.querySelector(".toca")?.remove();
+  }
+}
+
+function montarFoto(){
+  $("#cam").onchange = ev => {
+    const file = ev.target.files?.[0]; if (!file) return;
+    const img = new Image(), url = URL.createObjectURL(file);
+    img.onload = () => {
+      const s = Math.min(img.width, img.height), c = document.createElement("canvas"); c.width = c.height = 420;
+      c.getContext("2d").drawImage(img, (img.width-s)/2, (img.height-s)/2, s, s, 0, 0, 420, 420);
+      A._foto = c.toDataURL("image/jpeg", .78); URL.revokeObjectURL(url); render();
+    };
+    img.src = url;
+  };
+  $("#sinfoto").onclick = () => { A._foto = null; render(); };
+}
+
+function avanza(){ const vs = visibles(), i = vs.findIndex(x => x.id===hist[hist.length-1]); if (vs[i+1]){ hist.push(vs[i+1].id); render(); window.scrollTo({top:0}); } }
+function atras(){ hist.pop(); render(); }
+
+// ── Inicio y final
+function hola(){
+  return `<div class="seccion" style="padding-block:20px">${filaFormas()}
+      <span class="num">Creamos · ${new Date().getFullYear()}</span>
+      <h1>Tu experiencia en Creamos este año</h1>
+      <p>Son preguntas cortas, una por pantalla. Podés saltar las que no querás responder. Al terminar, tu nombre aparece en la pantalla del salón.</p>
+    </div>
+    <div class="pie"><button class="continuar" id="empezar">Comenzar ${ICO.flecha}</button>
+      <button class="link" id="verpantalla">Abrir la pantalla del salón</button>
+      <details class="adrian"><summary>Notas para Adrián</summary><ol>
+        <li><b>Quién responde:</b> cada participante desde su celular, entrando por el QR de la pantalla del salón. En Ora, con un link de la jornada que no pida sesión, o desde las tablets kiosco.</li>
+        <li><b>Identificación:</b> busca su nombre en <code>participants_directory</code>. Se precargan Creamos ID, zona (<code>participants.zone</code>) y programas (<code>program_enrollments.program</code>), y esas preguntas se saltan. «No encuentro mi nombre» crea el contacto como <code>tablet_registrar</code> con <code>p_contacto</code>.</li>
+        <li><b>Identidad visual:</b> colores y formas de cada programa (círculo, píldora horizontal, píldora vertical, cuadro). El rombo del CCI es propuesta, porque no está en la referencia.</li>
+        <li><b>Preguntas abiertas:</b> texto libre, sin opciones sugeridas, para no direccionar la respuesta.</li>
+        <li><b>Escala:</b> 1 a 5, igual a las estrellas de Kobo. Se alterna entre dial y barra; el dato es el mismo. No hay valor marcado al inicio.</li>
+        <li><b>Saltar:</b> casi todo se puede saltar. Se guarda la lista <code>saltadas</code> para distinguir «no respondió» de «no aplica».</li>
+        <li><b>Guardado:</b> tabla nueva, por ejemplo <code>linea_base_respuestas</code> (participant_id, client_id único, respuestas jsonb, created_at), con RPC idempotente y la cola sin conexión de la Tablet de eventos. Los campos usan los nombres de Kobo.</li>
+        <li><b>Pantalla del salón:</b> otra vista que escucha en vivo (Supabase Realtime) una tabla con primer nombre y foto. Muestra a cada persona 15 segundos, en fila si terminan varias a la vez. La foto es opcional y debería ligarse a <code>image_consent</code> e ir a Storage.</li>
+      </ol></details></div>`;
+}
+function montarHola(){
+  $("#empezar").onclick = () => { A = {}; salto = new Set(); hist = [PASOS[0].id]; render(); };
+  $("#verpantalla").onclick = () => { vista = "pantalla"; try { history.replaceState(null, "", "#pantalla"); } catch {} render(); };
+}
+function fin(){
+  const n = primerNombre();
+  return `<div class="fin">
+      ${A._foto ? `<img class="vista-foto" src="${A._foto}" alt="">` : filaFormas()}
+      <h1>Gracias${n?`, ${esc(n)}`:""}</h1>
+      <p>${estado.ok ? "Tus respuestas se enviaron. Ahora vas a aparecer en la pantalla del salón." : "Enviando tus respuestas…"}</p>
+      ${prueba ? `<p class="aviso">Modo de prueba: las respuestas se guardan solo en este navegador. Si tenés la pantalla del salón abierta en otra pestaña, ahí vas a ver la felicitación.</p>` : ""}
+    </div>
+    <div class="pie"><button class="continuar" id="otra">Terminar</button></div>`;
+}
+function montarFin(){ $("#otra").onclick = () => { A = {}; hist = []; salto = new Set(); estado.ok = false; prueba = false; render(); }; }
+
+// ── Guardar y avisar a la pantalla
+const estado = {ok:false};
+let prueba = false;
+let db = null, dl = null;
+const canal = (() => { try { return new BroadcastChannel("creamos-pantalla"); } catch { return null; } })();
+async function enviar(){
+  const b = $("#sigue"); b.disabled = true; b.textContent = "Enviando…";
+  const reg = Object.fromEntries(Object.entries(A).filter(([k]) => !k.startsWith("_")));
+  Object.assign(reg, {saltadas:[...salto], origen:A._nueva?"nueva":"ora", formulario:"C_02.2 Línea de Base Intermedia", creado:new Date().toISOString()});
+  const cel = {nombre:primerNombre(), foto:A._foto || null, creado:reg.creado};
+  try {
+    if (db){ await db.collection("respuestas").add(reg); await db.collection("pantalla").add(cel); }
+    else { prueba = true; guardaLocal(reg); canal?.postMessage(cel); }
+    estado.ok = true; hist.push("_fin"); render();
+  } catch(e){
+    // Quien no tiene permiso para guardar (por ejemplo, alguien revisando el prototipo) termina igual, en modo de prueba
+    if (["invalid_argument","not_granted","capability_disabled","revoked"].includes(e?.code)){
+      prueba = true; guardaLocal(reg); canal?.postMessage(cel); llega(cel, false); estado.ok = true; hist.push("_fin"); render(); return;
+    }
+    b.disabled = false; b.innerHTML = `Intentar de nuevo ${ICO.flecha}`;
+    const m = e?.code==="quota_exceeded" ? "No hay espacio para más respuestas. Avisale al equipo." : "No se pudieron enviar. Revisá tu conexión e intentá de nuevo.";
+    b.insertAdjacentHTML("beforebegin", `<p class="aviso">${m}</p>`);
+  }
+}
+
+// ── Pantalla del salón (#pantalla)
+let muro = [], cola = [], mostrando = false, cargaInicial = true, desde = new Date().toISOString();
+function renderPantalla(){
+  const raiz = $("#raiz");
+  if (!raiz.querySelector(".pantalla")){
+    raiz.innerHTML = `<div class="pantalla">
+      <div class="enc"><div><p class="eyebrow">Creamos · ${new Date().getFullYear()}</p><h1>Gracias por compartir tu experiencia</h1></div>
+        <div class="unirse"><div id="qr" aria-label="Código QR para responder"></div><p>Escaneá el código para responder</p></div></div>
+      <p class="cuenta"><b id="total">0</b><span>personas ya respondieron</span></p>
+      <div class="muro" id="muro"></div>
+      <div class="pie-p"><button class="btn-p" id="ejemplo">Ver un ejemplo</button><button class="btn-p" id="csv">Descargar respuestas</button><button class="btn-p" id="volver">Volver al formulario</button></div>
+      <div class="deco" aria-hidden="true">${["apoyo-emocional","mi-elo","educacion","inclusion-laboral"].map(k=>forma(k,{max:160})).join("")}</div>
+    </div>`;
+    try { new QRCode($("#qr"), {text:URL_APP, width:240, height:240, colorDark:"#1B2C4B", colorLight:"#ffffff"}); } catch { $("#qr").closest(".unirse").hidden = true; }
+    $("#ejemplo").onclick = () => encola({nombre:"Ana", foto:null, ejemplo:true});
+    $("#volver").onclick = () => { vista = "form"; try { history.replaceState(null, "", location.pathname + location.search); } catch {} render(); };
+    $("#csv").onclick = descargar;
+  }
+  pintaMuro();
+}
+function pintaMuro(){
+  if (!$("#muro")) return;
+  $("#total").textContent = muro.length;
+  $("#muro").innerHTML = muro.length ? muro.slice(-40).reverse().map(m => `<div class="g"><span class="avatar">${m.foto?`<img src="${m.foto}" alt="">`:esc(iniciales(m.nombre))}</span>${esc(m.nombre)}</div>`).join("")
+    : `<p class="vacio-p">Cuando alguien termine, su nombre aparece aquí.</p>`;
+}
+function encola(m){ cola.push(m); if (!mostrando) siguiente(); }
+function siguiente(){
+  const m = cola.shift(), p = document.querySelector(".pantalla");
+  if (!m || !p){ mostrando = false; return; }
+  mostrando = true;
+  const SEG = 15;
+  p.insertAdjacentHTML("beforeend", `<div class="cele" id="cele">
+    <span class="avatar">${m.foto?`<img src="${m.foto}" alt="">`:esc(iniciales(m.nombre))}</span>
+    <h2>¡Felicidades, ${esc(m.nombre)}!</h2><p class="sub">${m.ejemplo?"Ejemplo de cómo se ve en la pantalla":"Gracias por completar tu evaluación"}</p>
+    <div class="tiempo"><i id="reloj"></i></div>
+    ${cola.length?`<p class="sigue">Sigue: ${esc(cola[0].nombre)}</p>`:""}</div><canvas class="confeti" id="confeti"></canvas>`);
+  $("#reloj").animate([{width:"100%"},{width:"0%"}], {duration:SEG*1000, fill:"forwards"});
+  confeti($("#confeti"), SEG*1000);
+  setTimeout(() => { $("#cele")?.remove(); $("#confeti")?.remove(); siguiente(); }, SEG*1000);
+}
+// Confeti con las formas de los programas
+function confeti(cv, ms){
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const ctx = cv.getContext("2d"), dpr = devicePixelRatio || 1;
+  let W = cv.width = Math.round((innerWidth||1280)*dpr), H = cv.height = Math.round((innerHeight||720)*dpr);
+  const cs = getComputedStyle(document.documentElement), cols = ["--ae","--gi","--edu","--il"].map(n => cs.getPropertyValue(n).trim());
+  const ps = Array.from({length:120}, (_,i) => ({x:Math.random()*W, y:-Math.random()*H*.7, vx:(Math.random()-.5)*1.6*dpr, vy:(1.6+Math.random()*2.4)*dpr, r:Math.random()*Math.PI, s:(8+Math.random()*10)*dpr, t:i%4, c:cols[i%4]}));
+  const t0 = performance.now();
+  (function paso(t){ if (!cv.isConnected || t - t0 > ms) return;
+    if (innerWidth && cv.width !== Math.round(innerWidth*dpr)){ W = cv.width = Math.round(innerWidth*dpr); H = cv.height = Math.round(innerHeight*dpr); }
+    ctx.clearRect(0,0,W,H);
+    ps.forEach(q => { q.x += q.vx; q.y += q.vy; q.r += .03; if (q.y > H + 40) { q.y = -40; q.x = Math.random()*W; }
+      ctx.save(); ctx.translate(q.x,q.y); ctx.rotate(q.r); ctx.fillStyle = q.c; ctx.beginPath();
+      const s = q.s;
+      if (q.t===0) ctx.arc(0,0,s/2,0,Math.PI*2);
+      else if (q.t===1) ctx.roundRect(-s,-s/3,s*2,s*2/3,s/3);
+      else if (q.t===2) ctx.roundRect(-s/3,-s,s*2/3,s*2,s/3);
+      else ctx.roundRect(-s/2,-s/2,s,s,s/8);
+      ctx.fill(); ctx.restore(); });
+    requestAnimationFrame(paso); })(t0);
+}
+function llega(m, nuevo){ muro.push(m); pintaMuro(); if (nuevo && vista==="pantalla") encola(m); }
+canal && (canal.onmessage = ev => llega(ev.data, true));
+
+let registros = (() => { try { return JSON.parse(localStorage.getItem("creamos-respuestas") || "[]"); } catch { return []; } })();
+function guardaLocal(reg){ registros.push(reg); try { localStorage.setItem("creamos-respuestas", JSON.stringify(registros)); } catch {} }
+function aCSV(){
+  const plano = r => Object.fromEntries(Object.entries(r).map(([k,v]) => [k, Array.isArray(v) ? v.join("; ") : v]));
+  const filas = registros.map(plano), cols = [...new Set(filas.flatMap(Object.keys))];
+  const q = v => `"${String(v ?? "").replace(/"/g,'""')}"`;
+  return "﻿" + [cols.map(q).join(","), ...filas.map(f => cols.map(c => q(f[c])).join(","))].join("\n");
+}
+async function descargar(){
+  const b = $("#csv");
+  if (!registros.length){ b.textContent = "Todavía no hay respuestas"; return; }
+  const nombre = `mi-anio-creamos-${new Date().toISOString().slice(0,10)}.csv`;
+  if (!dl){ // Fuera de Claude: descarga directa desde el navegador
+    const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([aCSV()], {type:"text/csv"})); a.download = nombre; a.click(); return; }
+  try { await dl.save({filename:nombre, data:aCSV()}); }
+  catch(e){ if (e?.code!=="declined") b.textContent = "No se pudo descargar"; }
+}
+
+window.addEventListener("hashchange", () => { vista = location.hash==="#pantalla" ? "pantalla" : "form"; render(); });
+render();
+
+(async () => {
+  if (!window.claude?.use) return;
+  const [d, down] = await Promise.all([claude.use("db"), claude.use("downloads")]);
+  dl = down; if (!d) return; db = d;
+  db.collection("pantalla").onSnapshot(snap => {
+    snap.docChanges().forEach(ch => { if (ch.type!=="added") return; const m = ch.doc.data(); llega(m, !cargaInicial && m.creado >= desde); });
+    cargaInicial = false;
+  }, () => {});
+  db.collection("respuestas").onSnapshot(snap => { registros = snap.docs.map(x => ({id:x.id, ...x.data()})); }, () => {});
+})();
+})();
+</script>
